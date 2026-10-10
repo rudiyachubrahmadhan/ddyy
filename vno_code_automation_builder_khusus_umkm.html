@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNo-Code Automation Builder Khusus UMKM</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter & Icons (Lucide) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d', 900: '#14532d' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .node-card { transition: all 0.2s ease; }
+        .node-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-600 text-white p-2 rounded-xl flex items-center justify-center shadow-md shadow-brand-600/20">
+                    <i data-lucide="zap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="font-bold text-lg text-slate-900 tracking-tight">OtomatisUMKM</span>
+                    <span class="block text-xs text-brand-600 font-semibold">No-Code Workflow Builder</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#features" class="hover:text-brand-600 transition">Fitur</a>
+                <a href="#builder" class="hover:text-brand-600 transition">Builder Alur</a>
+                <a href="#pricing" class="hover:text-brand-600 transition">Harga</a>
+                <a href="#deploy" class="hover:text-brand-600 transition font-semibold text-brand-600">Panduan Deploy Gratis</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button onclick="switchTab('builder')" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+                    Coba Demo
+                </button>
+                <button onclick="openModal('pricingModal')" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-md shadow-brand-600/20 transition">
+                    Langganan Pro
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 bg-gradient-to-b from-brand-50/50 via-white to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-semibold mb-6">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <span>Solusi Otomatisasi Bisnis Tanpa Coding</span>
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+                    Kembangkan Bisnis UMKM Anda dengan <span class="text-brand-600">Otomatisasi Cerdas</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed">
+                    Kirim WhatsApp otomatis saat ada pesanan masuk, sinkronkan data spreadsheet, dan balas pelanggan 24/7 tanpa perlu jago pemrograman.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#builder" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-2xl shadow-xl shadow-brand-600/25 transition transform hover:-translate-y-0.5">
+                        <i data-lucide="play" class="w-5 h-5 mr-2"></i> Mulai Buat Alur Kerja
+                    </a>
+                    <a href="#deploy" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-2xl shadow-sm transition">
+                        <i data-lucide="terminal" class="w-5 h-5 mr-2 text-slate-500"></i> Cara Deploy Gratis
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dashboard Preview / Illustration -->
+            <div class="mt-16 relative max-w-5xl mx-auto rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden">
+                <div class="bg-slate-100 px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-rose-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                    </div>
+                    <div class="text-xs font-mono text-slate-500 bg-white px-3 py-1 rounded-md border border-slate-200">otomatisumkm.web.app/builder</div>
+                    <div class="w-16"></div>
+                </div>
+                <div class="p-6 bg-slate-50 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center space-x-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-full md:w-auto">
+                        <div class="p-3 bg-emerald-100 text-emerald-600 rounded-xl"><i data-lucide="shopping-bag" class="w-6 h-6"></i></div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 uppercase">Trigger</div>
+                            <div class="font-bold text-slate-800">Pesanan Masuk (Shopify/WA)</div>
+                        </div>
+                    </div>
+                    <div class="text-slate-400 rotate-90 md:rotate-0"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>
+                    <div class="flex items-center space-x-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-full md:w-auto">
+                        <div class="p-3 bg-sky-100 text-sky-600 rounded-xl"><i data-lucide="database" class="w-6 h-6"></i></div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 uppercase">Aksi 1</div>
+                            <div class="font-bold text-slate-800">Simpan ke Google Sheets</div>
+                        </div>
+                    </div>
+                    <div class="text-slate-400 rotate-90 md:rotate-0"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>
+                    <div class="flex items-center space-x-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm w-full md:w-auto">
+                        <div class="p-3 bg-brand-100 text-brand-600 rounded-xl"><i data-lucide="message-square" class="w-6 h-6"></i></div>
+                        <div>
+                            <div class="text-xs font-semibold text-slate-400 uppercase">Aksi 2</div>
+                            <div class="font-bold text-slate-800">Kirim WhatsApp Konfirmasi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Workflow Builder Section -->
+    <section id="builder" class="py-20 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Visual Builder</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-1">Rancang Alur Kerja UMKM Anda</h2>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                    <button onclick="resetWorkflow()" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+                        Reset Alur
+                    </button>
+                    <button onclick="simulateWorkflow()" class="px-5 py-2 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-md shadow-brand-600/20 transition flex items-center space-x-2">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <span>Uji Coba Alur</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Sidebar Tools / Node Picker -->
+                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 h-fit">
+                    <h3 class="font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i data-lucide="plus-circle" class="w-5 h-5 text-brand-600"></i>
+                        <span>Komponen Blok</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4">Klik untuk menambahkan langkah baru ke dalam alur otomatisasi Anda.</p>
+                    <div class="space-y-3">
+                        <button onclick="addNode('trigger', 'Pesanan Masuk WhatsApp', 'shopping-bag', 'emerald')" class="w-full text-left p-3 rounded-2xl bg-white border border-slate-200 hover:border-brand-500 hover:shadow-md transition flex items-center space-x-3 group">
+                            <div class="p-2 bg-emerald-100 text-emerald-600 rounded-xl group-hover:bg-brand-600 group-hover:text-white transition"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-800">Trigger: Pesanan</div>
+                                <div class="text-xs text-slate-500">Mulai saat ada order masuk</div>
+                            </div>
+                        </button>
+                        <button onclick="addNode('action', 'Kirim WhatsApp Otomatis', 'message-square', 'brand')" class="w-full text-left p-3 rounded-2xl bg-white border border-slate-200 hover:border-brand-500 hover:shadow-md transition flex items-center space-x-3 group">
+                            <div class="p-2 bg-brand-100 text-brand-600 rounded-xl group-hover:bg-brand-600 group-hover:text-white transition"><i data-lucide="message-square" class="w-5 h-5"></i></div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-800">Aksi: Kirim WA</div>
+                                <div class="text-xs text-slate-500">Kirim pesan teks / resi</div>
+                            </div>
+                        </button>
+                        <button onclick="addNode('action', 'Catat ke Google Sheets', 'database', 'sky')" class="w-full text-left p-3 rounded-2xl bg-white border border-slate-200 hover:border-brand-500 hover:shadow-md transition flex items-center space-x-3 group">
+                            <div class="p-2 bg-sky-100 text-sky-600 rounded-xl group-hover:bg-sky-600 group-hover:text-white transition"><i data-lucide="database" class="w-5 h-5"></i></div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-800">Aksi: Spreadsheet</div>
+                                <div class="text-xs text-slate-500">Simpan rekap pesanan otomatis</div>
+                            </div>
+                        </button>
+                        <button onclick="addNode('action', 'Kirim Email Tagihan', 'mail', 'amber')" class="w-full text-left p-3 rounded-2xl bg-white border border-slate-200 hover:border-brand-500 hover:shadow-md transition flex items-center space-x-3 group">
+                            <div class="p-2 bg-amber-100 text-amber-600 rounded-xl group-hover:bg-amber-600 group-hover:text-white transition"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                            <div>
+                                <div class="text-sm font-bold text-slate-800">Aksi: Kirim Email</div>
+                                <div class="text-xs text-slate-500">Kirim invoice / nota PDF</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas Area -->
+                <div class="lg:col-span-3 bg-slate-900 rounded-3xl p-6 min-h-[450px] flex flex-col justify-between relative overflow-hidden shadow-xl">
+                    <!-- Background Grid Pattern -->
+                    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#22c55e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    
+                    <div class="relative z-10 flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                        <div class="flex items-center space-x-2 text-slate-300 text-sm font-mono">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span id="workflowStatus">Status: Siap Dijalankan</span>
+                        </div>
+                        <div class="text-xs text-slate-400 font-mono" id="nodeCount">Total Blok: 3</div>
+                    </div>
+
+                    <!-- Nodes Container -->
+                    <div id="workflowCanvas" class="relative z-10 flex flex-col md:flex-row items-center justify-center gap-4 my-auto py-8 overflow-x-auto">
+                        <!-- Default Node 1 -->
+                        <div class="node-card bg-slate-800 border border-slate-700 text-white p-4 rounded-2xl w-64 shadow-lg relative group">
+                            <button onclick="removeNode(this)" class="absolute -top-2 -right-2 bg-rose-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition shadow"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400 font-semibold uppercase">Trigger (1)</div>
+                                    <div class="font-bold text-sm">Pesanan Masuk WhatsApp</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-400 bg-slate-900/50 p-2 rounded-xl mt-2 border border-slate-800">
+                                Event: Pelanggan kirim format "ORDER"
+                            </div>
+                        </div>
+
+                        <div class="text-emerald-500 font-bold rotate-90 md:rotate-0"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>
+
+                        <!-- Default Node 2 -->
+                        <div class="node-card bg-slate-800 border border-slate-700 text-white p-4 rounded-2xl w-64 shadow-lg relative group">
+                            <button onclick="removeNode(this)" class="absolute -top-2 -right-2 bg-rose-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition shadow"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="p-2 bg-sky-500/20 text-sky-400 rounded-xl"><i data-lucide="database" class="w-5 h-5"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400 font-semibold uppercase">Aksi (2)</div>
+                                    <div class="font-bold text-sm">Catat ke Google Sheets</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-400 bg-slate-900/50 p-2 rounded-xl mt-2 border border-slate-800">
+                                Target: Sheet "Pesanan Bulan Ini"
+                            </div>
+                        </div>
+
+                        <div class="text-emerald-500 font-bold rotate-90 md:rotate-0"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>
+
+                        <!-- Default Node 3 -->
+                        <div class="node-card bg-slate-800 border border-slate-700 text-white p-4 rounded-2xl w-64 shadow-lg relative group">
+                            <button onclick="removeNode(this)" class="absolute -top-2 -right-2 bg-rose-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition shadow"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="p-2 bg-brand-500/20 text-brand-400 rounded-xl"><i data-lucide="message-square" class="w-5 h-5"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400 font-semibold uppercase">Aksi (3)</div>
+                                    <div class="font-bold text-sm">Kirim WA Konfirmasi</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-400 bg-slate-900/50 p-2 rounded-xl mt-2 border border-slate-800">
+                                Pesan: "Halo Kak, pesanan dicatat!"
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulation Output Box -->
+                    <div id="simulationOutput" class="relative z-10 mt-4 bg-slate-800/80 border border-slate-700 rounded-2xl p-4 text-xs font-mono text-emerald-400 hidden">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-bold text-white flex items-center space-x-1"><i data-lucide="terminal" class="w-3.5 h-3.5 text-brand-500"></i> <span>Log Simulasi Eksekusi:</span></span>
+                            <span class="text-slate-400" id="simTime"></span>
+                        </div>
+                        <div id="simLogText" class="space-y-1"></div>
+                    </div>
+
+                    <div class="relative z-10 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>Tip: Alur otomatis berjalan 24/7 di cloud server.</span>
+                        <button onclick="saveWorkflow()" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center space-x-1">
+                            <i data-lucide="save" class="w-3.5 h-3.5"></i> <span>Simpan Alur Kerja</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Fitur Unggulan</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-1">Dibuat Khusus untuk Kebutuhan UMKM Indonesia</h2>
+                <p class="text-slate-600 mt-2">Tidak perlu tim IT atau agensi mahal. Kelola operasional bisnis harian secara otomatis.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">WhatsApp Gateway Otomatis</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Kirim notifikasi pesanan, status pengiriman resi, dan balasan chat ramah pelanggan secara instan 24 jam.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Sinkronisasi Google Sheets</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Rekap data transaksi, stok barang, dan data pelanggan langsung masuk ke spreadsheet Anda secara real-time.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Tanpa Batas Keahlian Teknis</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Cukup tarik dan susun balok alur kerja seperti menyusun balok mainan anak-anak. Sangat mudah digunakan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Harga Terjangkau</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-1">Investasi Murah untuk Skala Bisnis UMKM</h2>
+                <p class="text-slate-600 mt-2">Pilih paket langganan bulanan yang sesuai dengan volume transaksi toko Anda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <!-- Starter Plan -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="text-slate-500 font-semibold text-sm uppercase tracking-wider mb-2">Paket Pemula</div>
+                        <div class="text-3xl font-extrabold text-slate-900 mb-4">Rp 49.000 <span class="text-sm font-normal text-slate-500">/bulan</span></div>
+                        <p class="text-slate-600 text-sm mb-6">Cocok untuk UMKM baru yang mulai merintis penjualan online.</p>
+                        <ul class="space-y-3 text-sm text-slate-700 mb-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-600 mr-2"></i> 500 Pesanan / bulan</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-600 mr-2"></i> Integrasi WhatsApp Dasar</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-600 mr-2"></i> Sinkronisasi Google Sheets</li>
+                            <li class="flex items-center text-slate-400"><i data-lucide="x" class="w-4 h-4 mr-2"></i> Multi-admin support</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCheckout('Paket Pemula - Rp 49.000/bln')" class="w-full py-3 px-4 font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-2xl transition">
+                        Pilih Pemula
+                    </button>
+                </div>
+
+                <!-- Pro Plan (Featured) -->
+                <div class="bg-slate-900 text-white p-8 rounded-3xl border-2 border-brand-500 flex flex-col justify-between shadow-xl relative">
+                    <div class="absolute -top-3.5 right-8 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Terlaris UMKM
+                    </div>
+                    <div>
+                        <div class="text-brand-400 font-semibold text-sm uppercase tracking-wider mb-2">Paket UMKM Pro</div>
+                        <div class="text-3xl font-extrabold mb-4">Rp 149.000 <span class="text-sm font-normal text-slate-400">/bulan</span></div>
+                        <p class="text-slate-300 text-sm mb-6">Untuk toko online yang sedang berkembang pesat dan butuh otomatisasi penuh.</p>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-400 mr-2"></i> 5.000 Pesanan / bulan</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-400 mr-2"></i> WhatsApp & Email Otomatis</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-400 mr-2"></i> Google Sheets & Database Sync</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-400 mr-2"></i> Prioritas Support WhatsApp</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCheckout('Paket UMKM Pro - Rp 149.000/bln')" class="w-full py-3 px-4 font-semibold text-white bg-brand-600 hover:bg-brand-500 rounded-2xl shadow-lg shadow-brand-600/30 transition">
+                        Langganan Pro Sekarang
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="text-slate-500 font-semibold text-sm uppercase tracking-wider mb-2">Paket Bisnis Besar</div>
+                        <div class="text-3xl font-extrabold text-slate-900 mb-4">Rp 349.000 <span class="text-sm font-normal text-slate-500">/bulan</span></div>
+                        <p class="text-slate-600 text-sm mb-6">Untuk brand / distributor dengan volume order tinggi dan banyak cabang.</p>
+                        <ul class="space-y-3 text-sm text-slate-700 mb-8">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-600 mr-2"></i> Tanpa Batas (Unlimited) Pesanan</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-600 mr-2"></i> Semua Integrasi Fitur & API</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-600 mr-2"></i> Multi-admin & Custom Domain</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-brand-600 mr-2"></i> Dedicated Account Manager</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCheckout('Paket Bisnis Besar - Rp 349.000/bln')" class="w-full py-3 px-4 font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-2xl transition">
+                        Pilih Bisnis Besar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Deployment Guide Section -->
+    <section id="deploy" class="py-20 bg-slate-900 text-white border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <span class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/20 text-brand-400 text-xs font-semibold mb-4">
+                    <i data-lucide="gift" class="w-3.5 h-3.5"></i>
+                    <span>100% Gratis Tanpa Biaya Server</span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">Panduan Vibecoding & Deploy Gratis Webapp Ini</h2>
+                <p class="text-slate-400 text-base">Ikuti 3 langkah mudah di bawah ini untuk mempublikasikan aplikasi otomatisasi UMKM Anda ke internet secara gratis menggunakan GitHub & Vercel / Netlify.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 relative">
+                    <div class="w-10 h-10 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-lg mb-6 shadow-md">1</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Simpan Kode File</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Salin seluruh kode file tunggal (single file) HTML ini dan beri nama <code class="bg-slate-900 px-2 py-1 rounded text-brand-400 font-mono text-xs">index.html</code> di komputer Anda.
+                    </p>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs text-slate-400 font-mono">
+                        📁 otomatis-umkm/<br>&nbsp;&nbsp;└── index.html
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 relative">
+                    <div class="w-10 h-10 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-lg mb-6 shadow-md">2</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Upload ke GitHub</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Buat repository baru di <a href="https://github.com" target="_blank" class="text-brand-400 underline">GitHub.com</a>, lalu upload atau commit file <code class="bg-slate-900 px-2 py-1 rounded text-brand-400 font-mono text-xs">index.html</code> tersebut ke dalam repository utama Anda.
+                    </p>
+                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs text-brand-400 font-mono flex items-center space-x-2">
+                        <i data-lucide="github" class="w-4 h-4"></i>
+                        <span>github.com/username/otomatis-umkm</span>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 relative">
+                    <div class="w-10 h-10 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-lg mb-6 shadow-md">3</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Deploy ke Vercel/Netlify</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Buka <a href="https://vercel.com" target="_blank" class="text-brand-400 underline">Vercel.com</a> atau Netlify, pilih "New Project", hubungkan repository GitHub Anda, dan klik <strong class="text-white">Deploy</strong>!
+                    </p>
+                    <div class="bg-emerald-950/50 p-3 rounded-xl border border-emerald-800 text-xs text-emerald-400 font-mono flex items-center space-x-2">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        <span>Webapp online dalam 30 detik!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-600 text-white p-2 rounded-xl flex items-center justify-center">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <span class="font-bold text-white text-lg">OtomatisUMKM</span>
+            </div>
+            <div class="text-sm text-center md:text-left">
+                &copy; 2026 OtomatisUMKM Automation Builder. Dibuat dengan vibecoding untuk kemajuan UMKM Indonesia.
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="inline-flex items-center text-xs bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800 text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Sistem Aktif 24/7
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="credit-card" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Langganan OtomatisUMKM</h3>
+                <p id="selectedPackageText" class="text-sm text-slate-600 mt-1"></p>
+            </div>
+            <form onsubmit="handleCheckoutSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nama Pemilik / Toko</label>
+                    <input type="text" required placeholder="Contoh: Toko Berkah Jaya" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nomor WhatsApp Aktif</label>
+                    <input type="tel" required placeholder="081234567890" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Metode Pembayaran</label>
+                    <select class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-500 bg-white">
+                        <option>QRIS (GoPay, OVO, Dana, BCA)</option>
+                        <option>Transfer Bank BCA</option>
+                        <option>Virtual Account Mandiri</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/20 transition">
+                    Konfirmasi Pembayaran Langganan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast / Success Modal -->
+    <div id="toastModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
+            <div id="toastIconContainer" class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="check" class="w-7 h-7"></i>
+            </div>
+            <h3 id="toastTitle" class="text-xl font-bold text-slate-900 mb-2">Berhasil!</h3>
+            <p id="toastMessage" class="text-sm text-slate-600 mb-6"></p>
+            <button onclick="closeModal('toastModal')" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl transition">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Workflow Builder State
+        let nodes = [
+            { type: 'trigger', name: 'Pesanan Masuk WhatsApp', icon: 'shopping-bag', desc: 'Event: Pelanggan kirim format "ORDER"' },
+            { type: 'action', name: 'Catat ke Google Sheets', icon: 'database', desc: 'Target: Sheet "Pesanan Bulan Ini"' },
+            { type: 'action', name: 'Kirim WA Konfirmasi', icon: 'message-square', desc: 'Pesan: "Halo Kak, pesanan dicatat!"' }
+        ];
+
+        function renderCanvas() {
+            const canvas = document.getElementById('workflowCanvas');
+            document.getElementById('nodeCount').innerText = `Total Blok: ${nodes.length}`;
+            
+            let html = '';
+            nodes.forEach((node, index) => {
+                let badgeColor = node.type === 'trigger' ? 'emerald' : 'brand';
+                if (node.icon === 'database') badgeColor = 'sky';
+                if (node.icon === 'mail') badgeColor = 'amber';
+
+                html += `
+                    <div class="node-card bg-slate-800 border border-slate-700 text-white p-4 rounded-2xl w-64 shadow-lg relative group">
+                        <button onclick="removeNode(${index})" class="absolute -top-2 -right-2 bg-rose-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition shadow"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="p-2 bg-${badgeColor}-500/20 text-${badgeColor}-400 rounded-xl"><i data-lucide="${node.icon}" class="w-5 h-5"></i></div>
+                            <div>
+                                <div class="text-xs text-slate-400 font-semibold uppercase">${node.type === 'trigger' ? 'Trigger' : 'Aksi'} (${index + 1})</div>
+                                <div class="font-bold text-sm">${node.name}</div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-400 bg-slate-900/50 p-2 rounded-xl mt-2 border border-slate-800">
+                            ${node.desc}
+                        </div>
+                    </div>
+                `;
+
+                if (index < nodes.length - 1) {
+                    html += `<div class="text-emerald-500 font-bold rotate-90 md:rotate-0"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>`;
+                }
+            });
+            canvas.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function addNode(type, name, icon, color) {
+            let desc = 'Konfigurasi otomatis siap dijalankan';
+            if (name.includes('WhatsApp')) desc = 'Pesan otomatis terkirim via WA API';
+            if (name.includes('Sheets')) desc = 'Baris baru ditambahkan ke spreadsheet';
+            if (name.includes('Email')) desc = 'Invoice PDF terkirim ke email pelanggan';
+
+            nodes.push({ type, name, icon, desc });
+            renderCanvas();
+            showToast('Blok Ditambahkan', `Komponen "${name}" berhasil ditambahkan ke alur kerja.`);
+        }
+
+        function removeNode(index) {
+            nodes.splice(index, 1);
+            renderCanvas();
+            showToast('Blok Dihapus', 'Komponen telah dihapus dari alur kerja.');
+        }
+
+        function resetWorkflow() {
+            nodes = [
+                { type: 'trigger', name: 'Pesanan Masuk WhatsApp', icon: 'shopping-bag', desc: 'Event: Pelanggan kirim format "ORDER"' }
+            ];
+            renderCanvas();
+            showToast('Alur Direset', 'Alur kerja telah dikembalikan ke pengaturan awal.');
+        }
+
+        function simulateWorkflow() {
+            const outputBox = document.getElementById('simulationOutput');
+            const logText = document.getElementById('simLogText');
+            const simTime = document.getElementById('simTime');
+            const statusEl = document.getElementById('workflowStatus');
+
+            outputBox.classList.remove('hidden');
+            statusEl.innerText = 'Status: Menjalankan Simulasi...';
+            simTime.innerText = new Date().toLocaleTimeString();
+            
+            let logs = [
+                `<span class="text-slate-400">[0.01s]</span> Memulai eksekusi alur otomatisasi UMKM...`,
+                `<span class="text-emerald-400">[0.15s] ✓ Trigger Berhasil:</span> Mendeteksi pesanan masuk baru dari pelanggan @bunda_store`
+            ];
+
+            nodes.forEach((node, i) => {
+                if (i > 0) {
+                    logs.push(`<span class="text-sky-400">[0.${20 + i * 15}s] ✓ Menjalankan ${node.name}:</span> Sukses tereksekusi tanpa kendala.`);
+                }
+            });
+
+            logs.push(`<span class="text-emerald-400 font-bold">[1.00s] 🎉 Selesai!</span> Semua langkah otomatisasi berhasil dijalankan.`);
+            logText.innerHTML = logs.join('<br>');
+            statusEl.innerText = 'Status: Simulasi Berhasil (Aktif)';
+        }
+
+        function saveWorkflow() {
+            showToast('Alur Tersimpan', 'Konfigurasi alur kerja berhasil disimpan ke Cloud Database Anda.');
+        }
+
+        // Modal Controls
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function openCheckout(packageName) {
+            document.getElementById('selectedPackageText').innerText = `Anda memilih ${packageName}. Silakan isi data berikut untuk mengaktifkan langganan.`;
+            openModal('checkoutModal');
+        }
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            closeModal('checkoutModal');
+            showToast('Langganan Aktif!', 'Pembayaran berhasil dikonfirmasi. Sistem otomatisasi UMKM Anda kini aktif 24/7.');
+        }
+
+        function showToast(title, message) {
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = message;
+            openModal('toastModal');
+        }
+
+        function switchTab(tabId) {
+            document.getElementById(tabId).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
